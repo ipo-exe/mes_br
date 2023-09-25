@@ -2,6 +2,7 @@ from osgeo import gdal
 import geopandas as gpd
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import processing
 import shutil
 import os
@@ -75,12 +76,13 @@ def get_blank_raster(file_input, file_output, blank_value=0):
     raster_output = None
 
 
-def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, output_folder, output_name="lulc_hq"):
+def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, output_folder, output_name="lulc_hq", mbc="MBC8"):
     # -------------------------------------------------------------------------
     # LOAD TABLE
 
     df_table = pd.read_csv(file_table, sep=",")
-
+    df_table_nat = df_table.query("Type_{} == 'Natural'".format(mbc))
+    df_table_unat = df_table.query("Type_{} == 'Unnatural'".format(mbc))
 
     # -------------------------------------------------------------------------
     # LOAD MAPBIOMAS
@@ -105,7 +107,7 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
     raster_geotransform = raster_mapbiomas.GetGeoTransform()
 
     # -- Close the raster
-    raster_mapbiomas = None
+    # raster_mapbiomas = None
 
     del band_mapbiomas
     # -------------------------------------------------------------------------
@@ -121,6 +123,8 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
 
     # truncate to byte integer
     grid_osm = grid_osm.astype(np.uint8)
+    # plt.imshow(grid_osm)
+    # plt.show()
 
     # -- Close the raster
     raster_osm = None
@@ -140,6 +144,9 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
 
     # truncate to byte integer
     grid_biomes = grid_biomes.astype(np.uint8)
+    # plt.imshow(grid_biomes)
+    # plt.title("biomas")
+    # plt.show()
 
     # -- Close the raster
     raster_biomes = None
@@ -148,7 +155,26 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
 
     # -------------------------------------------------------------------------
     # PROCESS
-    grid_output = grid_mapbiomas
+    grid_osm_bool = 1 * (grid_osm > 0)
+    grid_lulc = (grid_mapbiomas * (grid_osm_bool == 0)) + (grid_osm * grid_osm_bool)
+    grid_output = grid_lulc * 0
+
+    # natural classes
+    for i in range(len(df_table_nat)):
+        id_biome = df_table_nat["Id_Biome"].values[i]
+        id_old_lulc = df_table_nat["Id_{}".format(mbc)].values[i]
+        id_new = df_table_nat["Id_HQ"].values[i]
+        grid_output = grid_output + (id_new * (grid_lulc == id_old_lulc) * (grid_biomes == id_biome))
+    # unnat classes
+    for i in range(len(df_table_unat)):
+        id_old_lulc = df_table_unat["Id_{}".format(mbc)].values[i]
+        id_new = df_table_unat["Id_HQ"].values[i]
+        grid_output = grid_output + (id_new * (grid_lulc == id_old_lulc))
+    '''
+    plt.imshow(grid_lulc)
+    plt.title("lulc")
+    plt.show()
+    '''
 
     # -------------------------------------------------------------------------
     # EXPORT RASTER FILE
@@ -156,6 +182,8 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
     driver = gdal.GetDriverByName('GTiff')
 
     # Create a new raster with the same dimensions as the original
+    file_output_name = "{}/{}".format(output_folder, output_name)
+    file_output = file_output_name + ".tif"
     raster_output = driver.Create(
         file_output,
         raster_x_size,
@@ -163,7 +191,6 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
         1,
         gdal.GDT_Byte
     )
-
     # Set the projection and geotransform of the new raster to match the original
     raster_output.SetProjection(raster_projection)
     raster_output.SetGeoTransform(raster_geotransform)
@@ -173,9 +200,6 @@ def get_lulc_hq(file_mapbiomas, file_osm, file_biomes, file_table, file_style, o
 
     # Close
     raster_output = None
-
-
-    print("hi")
 # -----------------------------------------------------------------------------
 # SET DATASETS FILEPATHS
 
@@ -184,10 +208,13 @@ s_root = "C:/gis/_projects_/invest_br"
 
 # mes geopackage dataset
 s_file_db = "C:/Users/Ipo/PycharmProjects/mes_br/mes_br_db.gpkg"
+# mes lulc table
+s_file_lulc_table = "C:/Users/Ipo/PycharmProjects/mes_br/lulc_conversion_table.csv"
 
 # styles files
 s_file_qml_biomes = "C:/Users/Ipo/PycharmProjects/mes_br/biomes.qml"
 s_file_qml_osm = "C:/Users/Ipo/PycharmProjects/mes_br/osm.qml"
+s_file_qml_lulchq = "C:/Users/Ipo/PycharmProjects/mes_br/lulc_hq.qml"
 
 # osm geopackage
 s_file_osm = "C:/gis/osm/osm_br_2022/osm_br_2022.gpkg"
@@ -196,17 +223,16 @@ s_file_osm = "C:/gis/osm/osm_br_2022/osm_br_2022.gpkg"
 s_folder_mapbiomas = "C:/gis/mapbiomas/Mapbiomas_landsat_30m/collection_08"
 s_file_style_mapbiomas = "C:/gis/mapbiomas/Mapbiomas_landsat_30m/style_c8.qml"
 
-
 # -----------------------------------------------------------------------------
 # SET PARAMETERS
 # set grid size
-grid_deg = 2
+grid_deg = 1
 
 # set tiles ids
-lst_tile_ids = [271]
+lst_tile_ids = [1184, 1183]
 
 # set lulc years
-lst_years = [2020, 2021, 2022]
+lst_years = [2020, 2021]
 
 # create folder
 s_folder_grid = "{}/grid_{}deg".format(s_root, grid_deg)
@@ -475,8 +501,17 @@ for i in range(len(gdf_tiles)):
 
         # ---------------------------------------------------------------------
         # compute lulc for habitat quality model
-
-
+        print(">>> tile {} :: raster lulc hq --year {}".format(tile_id, year))
+        get_lulc_hq(
+            file_mapbiomas=s_file_mapbiomas_output,
+            file_osm=s_file_osm_output,
+            file_biomes=s_file_biomes_output,
+            file_table=s_file_lulc_table,
+            output_folder=s_folder_year,
+            output_name="lulc_hq"
+        )
+        # copy qml file
+        shutil.copy(src=s_file_qml_lulchq, dst="{}/lulc_hq.qml".format(s_folder_year))
 
 
 

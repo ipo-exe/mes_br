@@ -134,7 +134,7 @@
       </minMaxOrigin>
       <colorPalette>
         <paletteEntry alpha="0" value="0" color="#ffffff" label="0"/>
-        <paletteEntry alpha="255" value="24" color="#d4271e" label="1"/>
+        <paletteEntry alpha="255" value="24" color="#d4271e" label="Urban street"/>
         <paletteEntry alpha="255" value="100" color="#d2cfc0" label="25"/>
         <paletteEntry alpha="255" value="101" color="#d4ad9b" label="101"/>
         <paletteEntry alpha="255" value="102" color="#d47f58" label="102"/>
