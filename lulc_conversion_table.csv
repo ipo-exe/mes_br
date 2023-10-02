@@ -97,6 +97,6 @@ Id_HQ,Name_HQ,Alias_HQ,Color_HQ,Id_PLANS3,Name_PLANS3,Alias_PLANS3,Color_PLANS3,
 101,Roads Low Traffic,RLT,#D4AD9B,6,Roads,R,black,31,Roads Low Traffic,RLT,#D4AD9B,0,Unnatural,-,-,101,Roads Low Traffic,RLT,#D4AD9B,Unnatural,OSM,101,Roads Low Traffic,RLT,#D4AD9B,Unnatural,OSM
 102,Roads Moderate Traffic,RMT,#D47F58,6,Roads,R,black,32,Roads Moderate Traffic,RMT,#D47F58,0,Unnatural,-,-,102,Roads Moderate Traffic,RMT,#D47F58,Unnatural,OSM,102,Roads Moderate Traffic,RMT,#D47F58,Unnatural,OSM
 103,Roads Heavy Traffic,RHT,#D44A0A,6,Roads,R,black,33,Roads Heavy Traffic,RHT,#D44A0A,0,Unnatural,-,-,103,Roads Heavy Traffic,RHT,#D44A0A,Unnatural,OSM,103,Roads Heavy Traffic,RHT,#D44A0A,Unnatural,OSM
-104,Railways,RR,#B5A295,6,Roads,R,black,34,Railways,RR,#B5A295,0,Unnatural,-,-,104,Railways,RR,#B5A295,Unnatural,OSM,104,Railways,RR,#B5A295,Unnatural,OSM
+104,Railways,RRD,#B5A295,6,Roads,R,black,34,Railways,RR,#B5A295,0,Unnatural,-,-,104,Railways,RRD,#B5A295,Unnatural,OSM,104,Railways,RRD,#B5A295,Unnatural,OSM
 105,Eolic infrastructure,EGI,#D4B40A,6,Roads,R,black,35,Eolic infrastructure,EGI,#D4B40A,0,Unnatural,-,-,105,Eolic infrastructure,EGI,#D4B40A,Unnatural,User,105,Eolic infrastructure,EGI,#D4B40A,Unnatural,User
-255,Not Observed,NOBS,#ffffff,4,Pasture,P,limegreen,255,Not Observed,NOBS,#ffffff,0,Unnatural,-,-,27,Not Observed,NOBS,#ffffff,Unnatural,Mapbiomas C8,27,Non Observed,Unnatural,#D5D5E5,Unnatural,Mapbiomas C7
+0,Not Observed,NOBS,#ffffff,4,Pasture,P,limegreen,255,Not Observed,NOBS,#ffffff,0,Unnatural,-,-,27,Not Observed,NOBS,#ffffff,Unnatural,Mapbiomas C8,27,Non Observed,Unnatural,#D5D5E5,Unnatural,Mapbiomas C7

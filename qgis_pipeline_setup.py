@@ -73,7 +73,6 @@ def get_blank_raster(file_input, file_output, blank_value=0):
     raster_output = None
     return None
 
-
 def get_lulc_model(
     file_mapbiomas,
     file_osm,
@@ -268,9 +267,64 @@ def get_lulc_model(
             )
     return None
 
+def get_threats(file_lulchq, file_table, output_folder):
+    # -------------------------------------------------------------------------
+    # Load table
+    df_table = pd.read_csv(file_table, sep=",")
+    df_table = df_table.query("Type_MBC8 == 'Unnatural'")
 
+    # -------------------------------------------------------------------------
+    # LOAD
+    # Open the raster file using gdal
+    raster_input = gdal.Open(file_lulchq)
 
+    # Get the raster band
+    band_input = raster_input.GetRasterBand(1)
 
+    # Read the raster data as a numpy array
+    grid_input = band_input.ReadAsArray()
+
+    # truncate to byte integer
+    grid_input = grid_input.astype(np.uint8)
+
+    # -- Collect useful metadata
+
+    raster_x_size = raster_input.RasterXSize
+    raster_y_size = raster_input.RasterYSize
+    raster_projection = raster_input.GetProjection()
+    raster_geotransform = raster_input.GetGeoTransform()
+
+    # -- Close the raster
+    raster_input = None
+
+    for i in range(len(df_table)):
+        name_threat = df_table["Alias_HQ"].values[i]
+        id_threat = df_table["Id_HQ"].values[i]
+        if id_threat == 0:
+            pass
+        else:
+
+            grid_output = 1 * (grid_input == id_threat)
+
+            # -------------------------------------------------------------------------
+            # EXPORT RASTER FILE
+            # Get the driver to create the new raster
+            driver = gdal.GetDriverByName("GTiff")
+
+            # Create a new raster with the same dimensions as the original
+            file_output = "{}/{}.tif".format(output_folder, name_threat)
+            raster_output = driver.Create(
+                file_output, raster_x_size, raster_y_size, 1, gdal.GDT_Byte
+            )
+            # Set the projection and geotransform of the new raster to match the original
+            raster_output.SetProjection(raster_projection)
+            raster_output.SetGeoTransform(raster_geotransform)
+
+            # Write the new data to the new raster
+            raster_output.GetRasterBand(1).WriteArray(grid_output)
+
+            # Close
+            raster_output = None
 
 # -----------------------------------------------------------------------------
 # SET DATASETS FILEPATHS
@@ -279,14 +333,15 @@ def get_lulc_model(
 s_root = "C:/gis/_projects_/invest_br"
 
 # mes geopackage dataset
-s_file_db = "C:/Users/Ipo/PycharmProjects/mes_br/mes_br_db.gpkg"
+s_src_folder = "C:/Users/Ipo/PycharmProjects/mes_br"
+s_file_db = "{}/mes_br_db.gpkg".format(s_src_folder)
 # mes lulc table
-s_file_lulc_table = "C:/Users/Ipo/PycharmProjects/mes_br/lulc_conversion_table.csv"
+s_file_lulc_table = "{}/lulc_conversion_table.csv".format(s_src_folder)
 
 # styles files
-s_file_qml_biomes = "C:/Users/Ipo/PycharmProjects/mes_br/biomes.qml"
-s_file_qml_osm = "C:/Users/Ipo/PycharmProjects/mes_br/osm.qml"
-s_file_qml_lulchq = "C:/Users/Ipo/PycharmProjects/mes_br/lulc_hq.qml"
+s_file_qml_biomes = "{}/biomes.qml".format(s_src_folder)
+s_file_qml_osm = "{}/osm.qml".format(s_src_folder)
+s_file_qml_lulchq = "{}/lulc_hq.qml".format(s_src_folder)
 
 # osm geopackage
 s_file_osm = "C:/gis/osm/osm_br_2022/osm_br_2022.gpkg"
@@ -355,6 +410,12 @@ for i in range(len(gdf_tiles)):
         pass
     else:
         os.mkdir(s_folder_tile)
+
+    # -------------------------------------------------------------------------
+    # copy lulc tables
+    shutil.copy(src="C:/Users/Ipo/PycharmProjects/mes_br/lulc_mean.csv", dst="{}/lulc_mean.csv".format(s_folder_tile))
+    shutil.copy(src="C:/Users/Ipo/PycharmProjects/mes_br/lulc_p05.csv", dst="{}/lulc_p05.csv".format(s_folder_tile))
+    shutil.copy(src="C:/Users/Ipo/PycharmProjects/mes_br/lulc_p95.csv", dst="{}/lulc_p95.csv".format(s_folder_tile))
 
     # -------------------------------------------------------------------------
     # GET TILE ATTRIBUTES
@@ -598,4 +659,24 @@ for i in range(len(gdf_tiles)):
         )
         # copy qml file for
         #shutil.copy(src=s_file_qml_lulchq, dst="{}/lulc_hq.qml".format(s_folder_year))
+        # create threats folder
+        s_folder_threats = "{}/threats".format(s_folder_year)
+        if os.path.exists(s_folder_threats):
+            pass
+        else:
+            os.mkdir(s_folder_threats)
 
+        # -------------------------------------------------------------------------
+        # copy threat tables
+        shutil.copy(src="{}/threat_mean.csv".format(s_src_folder), dst="{}/threat_mean.csv".format(s_folder_threats))
+        shutil.copy(src="{}/threat_p05.csv".format(s_src_folder), dst="{}/threat_p05.csv".format(s_folder_threats))
+        shutil.copy(src="{}/threat_p95.csv".format(s_src_folder), dst="{}/threat_p95.csv".format(s_folder_threats))
+
+        # -------------------------------------------------------------------------
+        # split threats
+        print(">>> tile {} :: raster computing threats".format(tile_id, year))
+        get_threats(
+            file_lulchq="{}/lulc_hq.tif".format(s_folder_year),
+            file_table=s_file_lulc_table,
+            output_folder=s_folder_threats
+        )
