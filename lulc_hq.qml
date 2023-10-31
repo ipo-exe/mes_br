@@ -133,108 +133,46 @@
         <stdDevFactor>2</stdDevFactor>
       </minMaxOrigin>
       <colorPalette>
-        <paletteEntry alpha="0" value="0" color="#ffffff" label="No data"/>
-        <paletteEntry alpha="255" value="1" color="#1f8d49" label="Pampa Forest Formation"/>
-        <paletteEntry alpha="255" value="2" color="#7dc975" label="Pampa Savanna Formation"/>
-        <paletteEntry alpha="255" value="3" color="#04381d" label="Pampa Mangrove"/>
-        <paletteEntry alpha="255" value="4" color="#026975" label="Pampa Floodable Forest"/>
-        <paletteEntry alpha="255" value="5" color="#02d659" label="Pampa Wooded Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="6" color="#519799" label="Pampa Wetland"/>
-        <paletteEntry alpha="255" value="7" color="#d6bc74" label="Pampa Grassland"/>
-        <paletteEntry alpha="255" value="8" color="#fc8114" label="Pampa Hypersaline Tidal Flat"/>
-        <paletteEntry alpha="255" value="9" color="#ffaa5f" label="Pampa Rocky Outcrop"/>
-        <paletteEntry alpha="255" value="10" color="#ad5100" label="Pampa Herbaceous Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="11" color="#d89f5c" label="Pampa Other non Forest Formations"/>
-        <paletteEntry alpha="255" value="12" color="#ffa07a" label="Pampa Beach, Dune and Sand Spot"/>
-        <paletteEntry alpha="255" value="13" color="#2532e4" label="Pampa River, Lake and Ocean"/>
-        <paletteEntry alpha="255" value="14" color="#1f8d49" label="Mata Atlantica Forest Formation"/>
-        <paletteEntry alpha="255" value="15" color="#7dc975" label="Mata Atlantica Savanna Formation"/>
-        <paletteEntry alpha="255" value="16" color="#04381d" label="Mata Atlantica Mangrove"/>
-        <paletteEntry alpha="255" value="17" color="#026975" label="Mata Atlantica Floodable Forest"/>
-        <paletteEntry alpha="255" value="18" color="#02d659" label="Mata Atlantica Wooded Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="19" color="#519799" label="Mata Atlantica Wetland"/>
-        <paletteEntry alpha="255" value="20" color="#d6bc74" label="Mata Atlantica Grassland"/>
-        <paletteEntry alpha="255" value="21" color="#fc8114" label="Mata Atlantica Hypersaline Tidal Flat"/>
-        <paletteEntry alpha="255" value="22" color="#ffaa5f" label="Mata Atlantica Rocky Outcrop"/>
-        <paletteEntry alpha="255" value="23" color="#ad5100" label="Mata Atlantica Herbaceous Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="24" color="#d89f5c" label="Mata Atlantica Other non Forest Formations"/>
-        <paletteEntry alpha="255" value="25" color="#ffa07a" label="Mata Atlantica Beach, Dune and Sand Spot"/>
-        <paletteEntry alpha="255" value="26" color="#2532e4" label="Mata Atlantica River, Lake and Ocean"/>
-        <paletteEntry alpha="255" value="27" color="#1f8d49" label="Cerrado Forest Formation"/>
-        <paletteEntry alpha="255" value="28" color="#7dc975" label="Cerrado Savanna Formation"/>
-        <paletteEntry alpha="255" value="29" color="#04381d" label="Cerrado Mangrove"/>
-        <paletteEntry alpha="255" value="30" color="#026975" label="Cerrado Floodable Forest"/>
-        <paletteEntry alpha="255" value="31" color="#02d659" label="Cerrado Wooded Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="32" color="#519799" label="Cerrado Wetland"/>
-        <paletteEntry alpha="255" value="33" color="#d6bc74" label="Cerrado Grassland"/>
-        <paletteEntry alpha="255" value="34" color="#fc8114" label="Cerrado Hypersaline Tidal Flat"/>
-        <paletteEntry alpha="255" value="35" color="#ffaa5f" label="Cerrado Rocky Outcrop"/>
-        <paletteEntry alpha="255" value="36" color="#ad5100" label="Cerrado Herbaceous Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="37" color="#d89f5c" label="Cerrado Other non Forest Formations"/>
-        <paletteEntry alpha="255" value="38" color="#ffa07a" label="Cerrado Beach, Dune and Sand Spot"/>
-        <paletteEntry alpha="255" value="39" color="#2532e4" label="Cerrado River, Lake and Ocean"/>
-        <paletteEntry alpha="255" value="40" color="#1f8d49" label="Caatinga Forest Formation"/>
-        <paletteEntry alpha="255" value="41" color="#7dc975" label="Caatinga Savanna Formation"/>
-        <paletteEntry alpha="255" value="42" color="#04381d" label="Caatinga Mangrove"/>
-        <paletteEntry alpha="255" value="43" color="#026975" label="Caatinga Floodable Forest"/>
-        <paletteEntry alpha="255" value="44" color="#02d659" label="Caatinga Wooded Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="45" color="#519799" label="Caatinga Wetland"/>
-        <paletteEntry alpha="255" value="46" color="#d6bc74" label="Caatinga Grassland"/>
-        <paletteEntry alpha="255" value="47" color="#fc8114" label="Caatinga Hypersaline Tidal Flat"/>
-        <paletteEntry alpha="255" value="48" color="#ffaa5f" label="Caatinga Rocky Outcrop"/>
-        <paletteEntry alpha="255" value="49" color="#ad5100" label="Caatinga Herbaceous Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="50" color="#d89f5c" label="Caatinga Other non Forest Formations"/>
-        <paletteEntry alpha="255" value="51" color="#ffa07a" label="Caatinga Beach, Dune and Sand Spot"/>
-        <paletteEntry alpha="255" value="52" color="#2532e4" label="Caatinga River, Lake and Ocean"/>
-        <paletteEntry alpha="255" value="53" color="#1f8d49" label="Amazonia Forest Formation"/>
-        <paletteEntry alpha="255" value="54" color="#7dc975" label="Amazonia Savanna Formation"/>
-        <paletteEntry alpha="255" value="55" color="#04381d" label="Amazonia Mangrove"/>
-        <paletteEntry alpha="255" value="56" color="#026975" label="Amazonia Floodable Forest"/>
-        <paletteEntry alpha="255" value="57" color="#02d659" label="Amazonia Wooded Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="58" color="#519799" label="Amazonia Wetland"/>
-        <paletteEntry alpha="255" value="59" color="#d6bc74" label="Amazonia Grassland"/>
-        <paletteEntry alpha="255" value="60" color="#fc8114" label="Amazonia Hypersaline Tidal Flat"/>
-        <paletteEntry alpha="255" value="61" color="#ffaa5f" label="Amazonia Rocky Outcrop"/>
-        <paletteEntry alpha="255" value="62" color="#ad5100" label="Amazonia Herbaceous Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="63" color="#d89f5c" label="Amazonia Other non Forest Formations"/>
-        <paletteEntry alpha="255" value="64" color="#ffa07a" label="Amazonia Beach, Dune and Sand Spot"/>
-        <paletteEntry alpha="255" value="65" color="#2532e4" label="Amazonia River, Lake and Ocean"/>
-        <paletteEntry alpha="255" value="66" color="#1f8d49" label="Pantanal Forest Formation"/>
-        <paletteEntry alpha="255" value="67" color="#7dc975" label="Pantanal Savanna Formation"/>
-        <paletteEntry alpha="255" value="68" color="#04381d" label="Pantanal Mangrove"/>
-        <paletteEntry alpha="255" value="69" color="#026975" label="Pantanal Floodable Forest"/>
-        <paletteEntry alpha="255" value="70" color="#02d659" label="Pantanal Wooded Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="71" color="#519799" label="Pantanal Wetland"/>
-        <paletteEntry alpha="255" value="72" color="#d6bc74" label="Pantanal Grassland"/>
-        <paletteEntry alpha="255" value="73" color="#fc8114" label="Pantanal Hypersaline Tidal Flat"/>
-        <paletteEntry alpha="255" value="74" color="#ffaa5f" label="Pantanal Rocky Outcrop"/>
-        <paletteEntry alpha="255" value="75" color="#ad5100" label="Pantanal Herbaceous Sandbank Vegetation"/>
-        <paletteEntry alpha="255" value="76" color="#d89f5c" label="Pantanal Other non Forest Formations"/>
-        <paletteEntry alpha="255" value="77" color="#ffa07a" label="Pantanal Beach, Dune and Sand Spot"/>
-        <paletteEntry alpha="255" value="78" color="#2532e4" label="Pantanal River, Lake and Ocean"/>
-        <paletteEntry alpha="255" value="79" color="#edde8e" label="Pasture"/>
-        <paletteEntry alpha="255" value="80" color="#f5b3c8" label="Soybean"/>
-        <paletteEntry alpha="255" value="81" color="#db7093" label="Sugar cane"/>
-        <paletteEntry alpha="255" value="82" color="#c71585" label="Rice"/>
-        <paletteEntry alpha="255" value="83" color="#ff69b4" label="Cotton (beta)"/>
-        <paletteEntry alpha="255" value="84" color="#f54ca9" label="Other Temporary Crops"/>
-        <paletteEntry alpha="255" value="85" color="#d68fe2" label="Coffee"/>
-        <paletteEntry alpha="255" value="86" color="#9932cc" label="Citrus"/>
-        <paletteEntry alpha="255" value="87" color="#9065d0" label="Palm Oil"/>
-        <paletteEntry alpha="255" value="88" color="#e6ccff" label="Other Perennial Crops"/>
-        <paletteEntry alpha="255" value="89" color="#7a5900" label="Forest Plantation"/>
-        <paletteEntry alpha="255" value="90" color="#ffefc3" label="Mosaic of Uses"/>
-        <paletteEntry alpha="255" value="91" color="#d4271e" label="Urban Area"/>
-        <paletteEntry alpha="255" value="92" color="#9c0027" label="Mining"/>
-        <paletteEntry alpha="255" value="93" color="#db4d4f" label="Other non Vegetated Areas"/>
-        <paletteEntry alpha="255" value="94" color="#091077" label="Aquaculture"/>
+		<paletteEntry label="Forest Formation" color="#1f8d49" alpha="255" value="3"/>
+		<paletteEntry label="Savanna Formation" color="#7dc975" alpha="255" value="4"/>
+		<paletteEntry label="Mangrove" color="#04381d" alpha="255" value="5"/>
+		<paletteEntry label="Floodable Forest" color="#026975" alpha="255" value="6"/>
+		<paletteEntry label="Wooded Sandbank Vegetation" color="#02d659" alpha="255" value="49"/>
+		<paletteEntry label="Non Forest Natural Formation" color="#ad975a" alpha="255" value="10"/>
+		<paletteEntry label="Wetland" color="#519799" alpha="255" value="11"/>
+		<paletteEntry label="Grassland" color="#d6bc74" alpha="255" value="12"/>
+		<paletteEntry label="Hypersaline Tidal Flat" color="#fc8114" alpha="255" value="32"/>
+		<paletteEntry label="Rocky Outcrop" color="#ffaa5f" alpha="255" value="29"/>
+		<paletteEntry label="Herbaceous Sandbank Vegetation" color="#ad5100" alpha="255" value="50"/>
+		<paletteEntry label="Other non Forest Formations" color="#d89f5c" alpha="255" value="13"/>
+		<paletteEntry label="Pasture" color="#edde8e" alpha="255" value="15"/>
+		<paletteEntry label="Soybean" color="#f5b3c8" alpha="255" value="39"/>
+		<paletteEntry label="Sugar cane" color="#db7093" alpha="255" value="20"/>
+		<paletteEntry label="Rice" color="#c71585" alpha="255" value="40"/>
+		<paletteEntry label="Cotton (beta)" color="#ff69b4" alpha="255" value="62"/>
+		<paletteEntry label="Other Temporary Crops" color="#f54ca9" alpha="255" value="41"/>
+		<paletteEntry label="Perennial Crop" color="#d082de" alpha="255" value="36"/>
+		<paletteEntry label="Coffee" color="#d68fe2" alpha="255" value="46"/>
+		<paletteEntry label="Citrus" color="#9932cc" alpha="255" value="47"/>
+		<paletteEntry label="Palm Oil" color="#9065d0" alpha="255" value="35"/>
+		<paletteEntry label="Other Perennial Crops" color="#e6ccff" alpha="255" value="48"/>
+		<paletteEntry label="Forest Plantation" color="#7a5900" alpha="255" value="9"/>
+		<paletteEntry label="Mosaic of Uses" color="#ffefc3" alpha="255" value="21"/>
+		<paletteEntry label="Non vegetated area" color="#d4271e" alpha="255" value="22"/>
+		<paletteEntry label="Beach, Dune and Sand Spot" color="#ffa07a" alpha="255" value="23"/>
+		<paletteEntry label="Urban Area" color="#d4271e" alpha="255" value="24"/>
+		<paletteEntry label="Mining" color="#9c0027" alpha="255" value="30"/>
+		<paletteEntry label="Other non Vegetated Areas" color="#db4d4f" alpha="255" value="25"/>
+		<paletteEntry label="Water" color="#0000FF" alpha="255" value="26"/>
+		<paletteEntry label="River, Lake and Ocean" color="#2532e4" alpha="255" value="33"/>
+		<paletteEntry label="Aquaculture" color="#091077" alpha="255" value="31"/>
+		<paletteEntry label="Not Observed" color="#ffff" alpha="255" value="27"/>        
         <paletteEntry alpha="255" value="100" color="#D2CFC0" label="Roads Very Low Traffic"/>
         <paletteEntry alpha="255" value="101" color="#D4AD9B" label="Roads Low Traffic"/>
         <paletteEntry alpha="255" value="102" color="#D47F58" label="Roads Moderate Traffic"/>
         <paletteEntry alpha="255" value="103" color="#D44A0A" label="Roads Heavy Traffic"/>
         <paletteEntry alpha="255" value="104" color="#B5A295" label="Railways"/>
         <paletteEntry alpha="255" value="105" color="#D4B40A" label="Eolic infrastructure"/>
-        <paletteEntry alpha="255" value="255" color="#ffffff" label="Not Observed"/>
       </colorPalette>
       <colorramp type="randomcolors" name="[source]">
         <Option/>

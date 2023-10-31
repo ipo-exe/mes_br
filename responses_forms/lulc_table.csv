@@ -1,0 +1,32 @@
+Id;Alias;Name;Type;Color;Description;Source;Symbol
+3;Fr;Forest;Natural cover;#1f8d49;Woody vegetation with arboreal or arboreal-shrub species, with continuous canopy dominance;MapBiomas;$L_{1}$
+4;Sv;Savanna;Natural cover;#7dc975;Open plant formation with developed shrub or tree layer, herbaceous layer always present;Mapbiomas;$L_{2}$
+5;Mg;Mangrove;Natural cover;#04381d;Dense and evergreen forest formations, often flooded by tide;Mapbiomas;$L_{3}$
+49;Ws;Wooded Sandbank;Natural cover;#02d659;Forest formations that are established on sandy soils or on dunes in the coastal zone;MapBiomas;$L_{4}$
+11;We;Wetland;Natural cover;#519799;Herbaceous vegetation with a predominance of grasses subject to permanent or temporary flooding;MapBiomas;$L_{5}$
+12;Gr;Grassland;Natural cover;#d6bc74;Vegetation with a predominance of grassy herbaceous stratum, with the presence of isolated shrubs woody plants;MapBiomas;$L_{6}$
+32;Sf;Salt-Flat;Natural cover;#fc8114;Formations often without tree vegetation, associated to hypersaline zones in the mangrove;MapBiomas;$L_{7}$
+29;Ro;Rocky Outcrop;Natural cover;#ffaa5f;Rocks naturally exposed on the surface with partial presence of rupicolous vegetation;MapBiomas;$L_{8}$
+50;Hs;Herbaceus Sandbank;Natural cover;#ad5100;Herbaceous vegetation established on sandy soils or on dunes in the coastal zone;MapBiomas;$L_{9}$
+23;Sd;Sand;Extensive use;#ffa07a;Sandy areas where there is no vegetation predominance of any kind;MapBiomas;$L_{10}$
+33;W;Water;Extensive use;#2532e4;Rivers, lakes, dams, reservoir and other water bodies;MapBiomas;$L_{11}$
+15;Ps;Pasture;Extensive use;#edde8e;Pasture area, predominantly planted, linked livestock production activities;MapBiomas;$L_{12}$
+39;Sy;Soybean;Extensive use;#f5b3c8;Cultivated areas with soybean;MapBiomas;$L_{13}$
+20;Sc;Sugar cane;Extensive use;#db7093;Cultivated areas with sugar cane;MapBiomas;$L_{14}$
+40;Rc;Rice;Extensive use;#c71585;Cultivated areas with rice, exclusively under irrigation;MapBiomas;$L_{15}$
+62;Ct;Cotton;Extensive use;#ff69b4;Cultivated areas with cotton;MapBiomas;$L_{16}$
+41;Tc;Temporary Crops;Extensive use;#f54ca9;Areas occupied with short or medium-term agricultural crops;MapBiomas;$L_{17}$
+46;Cf;Coffe;Extensive use;#d68fe2;Cultivated areas with coffee plantation;MapBiomas;$L_{18}$
+47;Ci;Citrus;Extensive use;#9932cc;Cultivated areas with citrus plantation;MapBiomas;$L_{19}$
+48;Pc;Perennial Crops;Extensive use;#e6ccff;Areas occupied with agricultural crops with a long vegetative cycle;MapBiomas;$L_{20}$
+9;Fp;Plantation;Extensive use;#7a5900;Tree species planted for commercial purposes;MapBiomas;$L_{21}$
+21;Mu;Mosaic of Uses;Extensive use;#ffefc3;Areas of agricultural use with mixed pasture and agriculture;MapBiomas;$L_{22}$
+24;Ur;Urban;Intensive use;#d4271e;Urban areas with predominance of non-vegetated surfaces;MapBiomas;$L_{23}$
+30;Mi;Mining;Intensive use;#9c0027;Areas of extensive mineral extractions with soil exposure and heavy machinery;MapBiomas;$L_{24}$
+31;Aq;Aquaculture;Intensive use;#091077;Artificial lakes, where aquaculture and/or salt production activities predominate;MapBiomas;$L_{25}$
+100;Vl;Very Light Traffic;Intensive use;#D2CFC0;Roads with very light traffic, incluing rural dirty roads;Open Street Maps;$L_{26}$
+101;Lt;Light Traffic;Intensive use;#D4AD9B;Roads with light traffic, like residential streets and tertiary roads;Open Street Maps;$L_{27}$
+102;Mt;Moderate Traffic;Intensive use;#D47F58;Roads with moderate traffic, secondary roads;Open Street Maps;$L_{28}$
+103;Ht;Heavy Traffic;Intensive use;#D44A0A;Roads with heavy traffic, primary roads and highways;Open Street Maps;$L_{29}$
+104;Rr;Rail Road;Intensive use;#B5A295;Rail roads;Open Street Maps;$L_{30}$
+110;Wf;Wind Farm;Intensive use;#D4B40A;Wind power generation infrastructure, including access roads;Open Street Maps;$L_{31}$

@@ -76,7 +76,6 @@ def get_blank_raster(file_input, file_output, blank_value=0):
 def get_lulc_model(
     file_mapbiomas,
     file_osm,
-    file_biomes,
     file_table,
     output_folder,
     output_name="lulc",
@@ -140,28 +139,6 @@ def get_lulc_model(
     del band_osm
 
     # -------------------------------------------------------------------------
-    # LOAD BIOMES
-    # Open the raster file using gdal
-    raster_biomes = gdal.Open(file_biomes)
-
-    # Get the raster band
-    band_biomes = raster_biomes.GetRasterBand(1)
-
-    # Read the raster data as a numpy array
-    grid_biomes = band_biomes.ReadAsArray()
-
-    # truncate to byte integer
-    grid_biomes = grid_biomes.astype(np.uint8)
-    # plt.imshow(grid_biomes)
-    # plt.title("biomas")
-    # plt.show()
-
-    # -- Close the raster
-    raster_biomes = None
-
-    del band_biomes
-
-    # -------------------------------------------------------------------------
     # PROCESS
 
     # set lulc mbc
@@ -169,27 +146,6 @@ def get_lulc_model(
     grid_lulc_mbc = (grid_mapbiomas * (grid_osm_bool == 0)) + (grid_osm * grid_osm_bool)
 
     if habitat_quality:
-        # HQ lulc
-        # set output grid
-        grid_output = grid_lulc_mbc * 0
-        # filter tables
-        df_table_nat = df_table.query("Type_{} == 'Natural'".format(mbc))
-        df_table_unat = df_table.query("Type_{} == 'Unnatural'".format(mbc))
-
-        # natural classes
-        for i in range(len(df_table_nat)):
-            id_old_lulc = df_table_nat["Id_{}".format(mbc)].values[i]
-            id_new = df_table_nat["Id_HQ"].values[i]
-            id_biome = df_table_nat["Id_Biome"].values[i]
-            grid_output = grid_output + (
-                id_new * (grid_lulc_mbc == id_old_lulc) * (grid_biomes == id_biome)
-            )
-        # unnat classes
-        for i in range(len(df_table_unat)):
-            id_old_lulc = df_table_unat["Id_{}".format(mbc)].values[i]
-            id_new = df_table_unat["Id_HQ"].values[i]
-            grid_output = grid_output + (id_new * (grid_lulc_mbc == id_old_lulc))
-
 
         # -------------------------------------------------------------------------
         # EXPORT RASTER FILE
@@ -207,7 +163,7 @@ def get_lulc_model(
         raster_output.SetGeoTransform(raster_geotransform)
 
         # Write the new data to the new raster
-        raster_output.GetRasterBand(1).WriteArray(grid_output)
+        raster_output.GetRasterBand(1).WriteArray(grid_lulc_mbc)
 
         # Close
         raster_output = None
@@ -271,7 +227,7 @@ def get_threats(file_lulchq, file_table, output_folder):
     # -------------------------------------------------------------------------
     # Load table
     df_table = pd.read_csv(file_table, sep=",")
-    df_table = df_table.query("Type_MBC8 == 'Unnatural'")
+    df_table = df_table.query("Type_MBC8 != 'Natural cover'")
 
     # -------------------------------------------------------------------------
     # LOAD
@@ -312,7 +268,7 @@ def get_threats(file_lulchq, file_table, output_folder):
             driver = gdal.GetDriverByName("GTiff")
 
             # Create a new raster with the same dimensions as the original
-            file_output = "{}/{}.tif".format(output_folder, name_threat)
+            file_output = "{}/{}.tif".format(output_folder, name_threat.upper())
             raster_output = driver.Create(
                 file_output, raster_x_size, raster_y_size, 1, gdal.GDT_Byte
             )
@@ -342,6 +298,7 @@ s_file_lulc_table = "{}/lulc_conversion_table.csv".format(s_src_folder)
 s_file_qml_biomes = "{}/biomes.qml".format(s_src_folder)
 s_file_qml_osm = "{}/osm.qml".format(s_src_folder)
 s_file_qml_lulchq = "{}/lulc_hq.qml".format(s_src_folder)
+s_file_qml_plans3 = "{}/plans3.qml".format(s_src_folder)
 
 # osm geopackage
 s_file_osm = "C:/gis/osm/osm_br_2022/osm_br_2022.gpkg"
@@ -413,9 +370,9 @@ for i in range(len(gdf_tiles)):
 
     # -------------------------------------------------------------------------
     # copy lulc tables
-    shutil.copy(src="C:/Users/Ipo/PycharmProjects/mes_br/lulc_mean.csv", dst="{}/lulc_mean.csv".format(s_folder_tile))
-    shutil.copy(src="C:/Users/Ipo/PycharmProjects/mes_br/lulc_p05.csv", dst="{}/lulc_p05.csv".format(s_folder_tile))
-    shutil.copy(src="C:/Users/Ipo/PycharmProjects/mes_br/lulc_p95.csv", dst="{}/lulc_p95.csv".format(s_folder_tile))
+    shutil.copy(src="{}/lulc_mean.csv".format(s_src_folder), dst="{}/lulc_mean.csv".format(s_folder_tile))
+    shutil.copy(src="{}/lulc_p05.csv".format(s_src_folder), dst="{}/lulc_p05.csv".format(s_folder_tile))
+    shutil.copy(src="{}/lulc_p95.csv".format(s_src_folder), dst="{}/lulc_p95.csv".format(s_folder_tile))
 
     # -------------------------------------------------------------------------
     # GET TILE ATTRIBUTES
@@ -442,23 +399,8 @@ for i in range(len(gdf_tiles)):
 
     s_file_vectors_db = "{}/vectors.gpkg".format(s_folder_tile)
 
-    # biomes
-    print(">>> tile {} ::  vector --biomes".format(tile_id))
-    s_layer = "biomes_latlong"
-    lst_latlong_layers.append(s_layer)
-    # clip by extent
-    processing.run(
-        "native:extractbyextent",
-        {
-            "INPUT": "{}|layername=biomas".format(s_file_db),
-            "EXTENT": grid_extent,
-            "CLIP": True,
-            "OUTPUT": "ogr:dbname='{}' table=\"{}\" (geom)".format(
-                s_file_vectors_db, s_layer
-            ),
-        },
-    )
-
+    # ---------------------------------------------------------------------
+    # OSM vectors
     # get all regions osm
     for region in lst_grid_regioes:
         print(">>> tile {} ::  vector --osm at {}".format(tile_id, region))
@@ -520,9 +462,102 @@ for i in range(len(gdf_tiles)):
             },
         )
 
+    # ---------------------------------------------------------------------
+    # Rasters
+    print(">>> tile {} :: processing rasters...".format(tile_id))
+
+    # ---------------------------------------------------------------------
+    # biomes
+    print(">>> tile {} :: biomas_we...".format(tile_id))
+    # clip and warp biomes
+    s_file_biomas = "{}/biomas_w.tif".format(s_folder_mapbiomas)
+    s_file_biomas_output_name = "{}/biomas_w".format(s_folder_tile)
+
+    # copy style file
+    shutil.copy(s_file_qml_biomes, s_file_biomas_output_name + ".qml")
+
+    # run warp
+    s_file_biomas_output = s_file_biomas_output_name + ".tif"
+    processing.run(
+        "gdal:warpreproject",
+        {
+            "INPUT": s_file_biomas,
+            "SOURCE_CRS": QgsCoordinateReferenceSystem("EPSG:4326"),
+            "TARGET_CRS": QgsCoordinateReferenceSystem(tile_proj.split(",")[0]),
+            "RESAMPLING": 0,
+            "NODATA": 255,
+            "TARGET_RESOLUTION": 30,
+            "OPTIONS": "",
+            "DATA_TYPE": 0,
+            "TARGET_EXTENT": grid_extent,
+            "TARGET_EXTENT_CRS": QgsCoordinateReferenceSystem("EPSG:4326"),
+            "MULTITHREADING": False,
+            "EXTRA": "",
+            "OUTPUT": s_file_biomas_output,
+        },
+    )
+
+    # ---------------------------------------------------------------------
+    # OSM
+    print(">>> tile {} :: osm...".format(tile_id))
+    # OSM
+    s_file_osm_output = "{}/osm.tif".format(s_folder_tile)
+    get_blank_raster(
+        file_input=s_file_biomas_output,
+        file_output=s_file_osm_output,
+        blank_value=0,
+    )
+    # copy qml file
+    shutil.copy(src=s_file_qml_osm, dst="{}/osm.qml".format(s_folder_tile))
+
+    # ---------------------------------------------------------------------
+    # rasterize vectors
+    # osm
+    for lyr in lst_osm_layers:
+        # Read the GeoPackage layer
+        osm_gdf = gpd.read_file(s_file_vectors_db, layer=lyr)
+        # Add a new field
+        osm_gdf["Id_OSM"] = 0
+
+        # rail
+        if "osm_rails" in lyr:
+            osm_gdf["Id_OSM"] = 104
+
+        # roads
+        else:
+            # conversion
+            osm_gdf["Id_OSM"] = 100
+            dct_conversion = {
+                "motorway": 103,
+                "motorway_link": 103,
+                "primary": 102,
+                "primary_link": 102,
+                "secondary": 101,
+                "secondary_link": 101,
+                "residential": 24,
+            }
+            for f in range(len(osm_gdf)):
+                s_class = osm_gdf["fclass"].values[f]
+                if s_class in list(dct_conversion.keys()):
+                    osm_gdf["Id_OSM"].values[f] = dct_conversion[s_class]
+
+        # Save the modified GeoDataFrame back to the same GeoPackage layer
+        osm_gdf.to_file(s_file_vectors_db, layer=lyr, driver="GPKG")
+
+        # rasterize
+        processing.run(
+            "gdal:rasterize_over",
+            {
+                "INPUT": "{}|layername={}".format(s_file_vectors_db, lyr),
+                "INPUT_RASTER": s_file_osm_output,
+                "FIELD": "Id_OSM",
+                "ADD": False,
+                "EXTRA": "",
+            },
+        )
+
     # -------------------------------------------------------------------------
     # RUN YEARS
-    print(">>> tile {} :: processing rasters...".format(tile_id))
     for year in lst_years:
         print(">>> tile {} :: raster --year {}".format(tile_id, year))
 
@@ -564,101 +599,21 @@ for i in range(len(gdf_tiles)):
         )
 
         # ---------------------------------------------------------------------
-        # make blank copies for OSM and Biomes rasterization
-        # biomes
-        s_file_biomes_output = "{}/biomes.tif".format(s_folder_year)
-        get_blank_raster(
-            file_input=s_file_mapbiomas_output,
-            file_output=s_file_biomes_output,
-            blank_value=0,
-        )
-        # copy qml file
-        shutil.copy(src=s_file_qml_biomes, dst="{}/biomes.qml".format(s_folder_year))
-
-        # OSM
-        s_file_osm_output = "{}/osm.tif".format(s_folder_year)
-        get_blank_raster(
-            file_input=s_file_mapbiomas_output,
-            file_output=s_file_osm_output,
-            blank_value=0,
-        )
-        # copy qml file
-        shutil.copy(src=s_file_qml_osm, dst="{}/osm.qml".format(s_folder_year))
-
-        # ---------------------------------------------------------------------
-        # rasterize vectors
-
-        # biomes
-        processing.run(
-            "gdal:rasterize_over",
-            {
-                "INPUT": "{}|layername=biomes_utm".format(s_file_vectors_db),
-                "INPUT_RASTER": s_file_biomes_output,
-                "FIELD": "Id_Bioma",
-                "ADD": False,
-                "EXTRA": "",
-            },
-        )
-        # osm
-        for lyr in lst_osm_layers:
-            # Read the GeoPackage layer
-            osm_gdf = gpd.read_file(s_file_vectors_db, layer=lyr)
-            # Add a new field
-            osm_gdf["Id_OSM"] = 0
-
-            # rail
-            if "osm_rails" in lyr:
-                osm_gdf["Id_OSM"] = 104
-
-            # roads
-            else:
-                # conversion
-                osm_gdf["Id_OSM"] = 100
-                dct_conversion = {
-                    "motorway": 103,
-                    "motorway_link": 103,
-                    "primary": 102,
-                    "primary_link": 102,
-                    "secondary": 101,
-                    "secondary_link": 101,
-                    "residential": 24,
-                }
-                for f in range(len(osm_gdf)):
-                    s_class = osm_gdf["fclass"].values[f]
-                    if s_class in list(dct_conversion.keys()):
-                        osm_gdf["Id_OSM"].values[f] = dct_conversion[s_class]
-
-            # Save the modified GeoDataFrame back to the same GeoPackage layer
-            osm_gdf.to_file(s_file_vectors_db, layer=lyr, driver="GPKG")
-
-            # rasterize
-            processing.run(
-                "gdal:rasterize_over",
-                {
-                    "INPUT": "{}|layername={}".format(s_file_vectors_db, lyr),
-                    "INPUT_RASTER": s_file_osm_output,
-                    "FIELD": "Id_OSM",
-                    "ADD": False,
-                    "EXTRA": "",
-                },
-            )
-
-        # ---------------------------------------------------------------------
         # compute lulc for habitat quality model
+
         print(">>> tile {} :: raster lulc --year {}".format(tile_id, year))
         get_lulc_model(
             file_mapbiomas=s_file_mapbiomas_output,
             file_osm=s_file_osm_output,
-            file_biomes=s_file_biomes_output,
             file_table=s_file_lulc_table,
             output_folder=s_folder_year,
             output_name="lulc",
             file_style_hq=s_file_qml_lulchq,
             habitat_quality=True,
-            plans3=True
+            plans3=True,
+            file_style_plans3=s_file_qml_plans3
         )
-        # copy qml file for
-        #shutil.copy(src=s_file_qml_lulchq, dst="{}/lulc_hq.qml".format(s_folder_year))
+
         # create threats folder
         s_folder_threats = "{}/threats".format(s_folder_year)
         if os.path.exists(s_folder_threats):
@@ -680,3 +635,4 @@ for i in range(len(gdf_tiles)):
             file_table=s_file_lulc_table,
             output_folder=s_folder_threats
         )
+
