@@ -33,6 +33,6 @@ Id_HQ,Name_HQ,Alias_HQ,Color_HQ,Id_PLANS3,Name_PLANS3,Alias_PLANS3,Color_PLANS3,
 102,Roads Moderate Traffic,Mt,#D47F58,6,Roads,R,black,32,Roads Moderate Traffic,Mt,#D47F58,102,Roads Moderate Traffic,Mt,#D47F58,Intensive use,OSM,102,Roads Moderate Traffic,Mt,#D47F58,Intensive use,OSM
 103,Roads Heavy Traffic,Ht,#D44A0A,6,Roads,R,black,33,Roads Heavy Traffic,Ht,#D44A0A,103,Roads Heavy Traffic,Ht,#D44A0A,Intensive use,OSM,103,Roads Heavy Traffic,Ht,#D44A0A,Intensive use,OSM
 104,Railways,Rr,#B5A295,6,Roads,R,black,34,Railways,Rr,#B5A295,104,Railways,Rr,#B5A295,Intensive use,OSM,104,Railways,Rr,#B5A295,Intensive use,OSM
-105,Wind farm,Wf,#D4B40A,6,Roads,R,black,35,Wind farm,Wf,#D4B40A,105,Wind farm,Wf,#D4B40A,Intensive use,User,105,Wind farm,Wf,#D4B40A,Intensive use,User
+105,Energy Infrastructure,Wf,#D4B40A,6,Roads,R,black,35,Wind farm,Wf,#D4B40A,105,Wind farm,Wf,#D4B40A,Intensive use,User,105,Wind farm,Wf,#D4B40A,Intensive use,User
 27,Not Observed,No,#ffffff,4,Pasture,P,limegreen,255,Not Observed,No,#ffffff,27,Not Observed,No,#ffffff,Not Observed,Mapbiomas C8,27,Not Observed,No,#D5D5E5,Not Observed,Mapbiomas C7
 0,No Data,Na,#ffffff,0,No Data,N,black,255,No Data,Na,#ffffff,0,No Data,Na,#ffffff,No Data,Mapbiomas C8,0,No Data,Na,#D5D5E5,No Data,Mapbiomas C7

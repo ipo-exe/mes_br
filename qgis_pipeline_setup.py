@@ -286,10 +286,11 @@ def get_threats(file_lulchq, file_table, output_folder):
 # SET DATASETS FILEPATHS
 
 # output dir
-s_root = "C:/gis/_projects_/invest_br"
+s_root = "C:/gis/_projects_/mes_br" # default: "C:/gis/_projects_/mes_br"
 
 # mes geopackage dataset
 s_src_folder = "C:/Users/Ipo/PycharmProjects/mes_br"
+s_src_folder_tables = "C:/Users/Ipo/PycharmProjects/mes_br"
 s_file_db = "{}/mes_br_db.gpkg".format(s_src_folder)
 # mes lulc table
 s_file_lulc_table = "{}/lulc_conversion_table.csv".format(s_src_folder)
@@ -304,22 +305,22 @@ s_file_qml_plans3 = "{}/plans3.qml".format(s_src_folder)
 s_file_osm = "C:/gis/osm/osm_br_2022/osm_br_2022.gpkg"
 
 # mapbiomas dataset
-s_folder_mapbiomas = "C:/gis/mapbiomas/Mapbiomas_landsat_30m/collection_08"
-s_file_style_mapbiomas = "C:/gis/mapbiomas/Mapbiomas_landsat_30m/style_c8.qml"
+s_folder_mapbiomas = "C:/gis/mapbiomas/Mapbiomas_sentinel_10m/collection_beta"
+s_file_style_mapbiomas = "C:/gis/mapbiomas/Mapbiomas_landsat_30m/style_beta.qml"
 
 # -----------------------------------------------------------------------------
 # SET PARAMETERS
 # set grid size
-grid_deg = 1
+grid_deg = 1 # 2
 
 # set tiles ids
-lst_tile_ids = [1184, 1183]
+lst_tile_ids = [1183]
 
 # set lulc years
-lst_years = [2020, 2021]
+lst_years = [2016, 2017, 2018, 2019, 2020, 2021, 2022]
 
 # create folder
-s_folder_grid = "{}/grid_{}deg".format(s_root, grid_deg)
+s_folder_grid = "{}/grid_{}deg_10m".format(s_root, grid_deg)
 if os.path.exists(s_folder_grid):
     pass
 else:
@@ -370,9 +371,15 @@ for i in range(len(gdf_tiles)):
 
     # -------------------------------------------------------------------------
     # copy lulc tables
-    shutil.copy(src="{}/lulc_mean.csv".format(s_src_folder), dst="{}/lulc_mean.csv".format(s_folder_tile))
-    shutil.copy(src="{}/lulc_p05.csv".format(s_src_folder), dst="{}/lulc_p05.csv".format(s_folder_tile))
-    shutil.copy(src="{}/lulc_p95.csv".format(s_src_folder), dst="{}/lulc_p95.csv".format(s_folder_tile))
+    shutil.copy(
+        src="{}/lulc_mean.csv".format(s_src_folder_tables),
+        dst="{}/lulc_mean.csv".format(s_folder_tile))
+    shutil.copy(
+        src="{}/lulc_p05.csv".format(s_src_folder_tables),
+        dst="{}/lulc_p05.csv".format(s_folder_tile))
+    shutil.copy(
+        src="{}/lulc_p95.csv".format(s_src_folder_tables),
+        dst="{}/lulc_p95.csv".format(s_folder_tile))
 
     # -------------------------------------------------------------------------
     # GET TILE ATTRIBUTES
@@ -468,10 +475,11 @@ for i in range(len(gdf_tiles)):
 
     # ---------------------------------------------------------------------
     # biomes
+    '''
     print(">>> tile {} :: biomas_we...".format(tile_id))
     # clip and warp biomes
     s_file_biomas = "{}/biomas_w.tif".format(s_folder_mapbiomas)
-    s_file_biomas_output_name = "{}/biomas_w".format(s_folder_tile)
+    s_file_biomas_output_name = "{}/biomas_w".format(s_folder_group)
 
     # copy style file
     shutil.copy(s_file_qml_biomes, s_file_biomas_output_name + ".qml")
@@ -496,7 +504,7 @@ for i in range(len(gdf_tiles)):
             "OUTPUT": s_file_biomas_output,
         },
     )
-
+    '''
     # ---------------------------------------------------------------------
     # OSM
     print(">>> tile {} :: osm...".format(tile_id))

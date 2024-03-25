@@ -172,7 +172,7 @@
         <paletteEntry alpha="255" value="102" color="#D47F58" label="Roads Moderate Traffic"/>
         <paletteEntry alpha="255" value="103" color="#D44A0A" label="Roads Heavy Traffic"/>
         <paletteEntry alpha="255" value="104" color="#B5A295" label="Railways"/>
-        <paletteEntry alpha="255" value="105" color="#D4B40A" label="Eolic infrastructure"/>
+        <paletteEntry alpha="255" value="105" color="#D4B40A" label="Energy infrastructure"/>
       </colorPalette>
       <colorramp type="randomcolors" name="[source]">
         <Option/>
